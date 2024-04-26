@@ -1,0 +1,157 @@
+# This is an example configuration file that documents all the options.
+# It will need to be modified for your specific use case.
+# Please refer to the link below for more details on how to set up the configuration file
+# https://github.com/StuffAnThings/qbit_manage/wiki/Config-Setup
+
+commands:
+  # The commands defined below will IGNORE any commands used in command line and docker env variables.
+  dry_run: false
+  share_limits: true
+  cross_seed: false
+  recheck: false
+  cat_update: false
+  tag_update: true
+  rem_unregistered: true
+  tag_tracker_error: false
+  rem_orphaned: false
+  tag_nohardlinks: false
+  skip_cleanup: false
+  skip_qb_version_check: false
+
+qbt:
+  # qBittorrent parameters
+  host: localhost:20000
+  user:
+  pass:
+
+directory:
+  # Do not remove these
+  # Cross-seed var: </your/path/here/>  # Output directory of cross-seed
+  # root_dir var: </your/path/here/>  # Root downloads directory used to check for orphaned files, noHL, and RecycleBin.
+  # <OPTIONAL> remote_dir var: </your/path/here/>  # Path of docker host mapping of root_dir.
+  # Must be set if you're running qbit_manage locally and qBittorrent/cross_seed is in a docker
+  # <OPTIONAL> recycle_bin var: </your/path/here/>   # Path of the RecycleBin folder. Default location is set to remote_dir/.RecycleBin
+  # <OPTIONAL> torrents_dir var: </your/path/here/>  # Path of the your qbittorrent torrents directory. Required for `save_torrents` attribute in recyclebin
+  # <OPTIONAL> orphaned_dir var: </your/path/here/>  # Path of the the Orphaned Data folder. This is similar to RecycleBin, but only for orphaned data.
+  cross_seed: /your/path/here/
+  root_dir: /mnt/torrent/downloads/data/
+  recycle_bin: /mnt/user/data/torrents/.RecycleBin
+  torrents_dir: /qbittorrent/data/BT_backup
+  orphaned_dir: /data/torrents/orphaned_data
+  remote_dir: /mnt/torrent/downloads/data/
+
+settings:
+  force_auto_tmm: false
+  tracker_error_tag: issue
+  nohardlinks_tag: noHL
+  share_limits_tag: clean
+  ignoreTags_OnUpdate:
+  - cleanOldMusic
+  - noHL
+  - issue
+  - cross-seed
+
+  share_limits_min_seeding_time_tag: MinSeedTimeNotReached
+  share_limits_min_num_seeds_tag: MinSeedsNotMet
+  share_limits_last_active_tag: LastActiveLimitNotReached
+  cross_seed_tag: cross-seed
+  cat_filter_completed: true
+  share_limits_filter_completed: true
+  tag_nohardlinks_filter_completed: true
+  force_retag_all: false
+webhooks:
+  error:
+  run_start:
+  run_end:
+  function:
+    cross_seed:
+    recheck:
+    cat_update:
+    tag_update:
+    rem_unregistered:
+    tag_tracker_error:
+    rem_orphaned:
+    tag_nohardlinks:
+    share_limits:
+    cleanup_dirs:
+
+recyclebin:
+  enabled: false
+  empty_after_x_days:
+  save_torrents: false
+  split_by_category: false
+
+orphaned:
+  empty_after_x_days:
+  exclude_patterns:
+
+tracker:
+  # Mandatory
+  # Tag Parameters
+  # <Tracker URL Keyword>:    # <MANDATORY> This is the keyword in the tracker url. You can define multiple tracker urls by splitting with `|` delimiter
+  # <MANDATORY> Set tag name. Can be a list of tags or a single tag
+  #   tag: <Tag Name>
+  # <OPTIONAL> Set the category based on tracker URL. This category option takes priority over the category defined by save directory
+  #   cat: <Category Name>
+  # <OPTIONAL> Set this to the notifiarr react name. This is used to add indexer reactions to the notifications sent by Notifiarr
+  #   notifiarr: <notifiarr indexer>
+  blutopia:
+    tag: BLU
+  digitalcore:
+    tag: DC
+  hdts:
+    tag: HDT
+  myanonamouse:
+    tag: MAM
+  torrentleech|tleechreload:
+    tag: TL
+  aither:
+    tag: Aither
+  opsfet:
+    tag: OPS
+  stackoverflow|bgp|empire:
+    tag: IPT
+  filelist:
+    tag: FL
+  tracker.scenetime.com:
+    tag: ST
+  reelflix.xyz:
+    tag: REEL
+  tracker.alpharatio.cc:
+    tag: AR
+  torrentseeds.org:
+    tag: TS
+  ramjet.speedapp.to:
+    tag: SPEED
+  tracker.empornium.sx:
+    tag: EMP
+  feernopeer.com:
+    tag: FNP
+  oldtoons.world:
+    tag: OldToons
+  fearnopeer.com:
+    tag: fearnopeer.com
+  tracker.anthelion.me:
+    tag: tracker.anthelion.me
+  hawke.uno:
+    tag: hawke.uno
+  flacsfor.me:
+    tag: flacsfor.me
+  hd-space.pw:
+    tag: hd-space.pw
+  signal.cathode-ray.tube:
+    tag: signal.cathode-ray.tube
+cat:
+  data: /mnt/torrent/downloads/data/
+
+share_limits:
+  OldMusic:
+    priority: 1
+    categories:
+    - Music
+    exclude_any_tags:
+    - OPS
+    - RED
+    max_seeding_time: 129600
+    add_group_to_tag: true
+    cleanup: false
